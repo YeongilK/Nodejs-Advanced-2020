@@ -1,4 +1,4 @@
-# Basic Node.js Lecture
+# Advanced Node.js Lecture
 
 #### Node.js 고급 강좌
 
