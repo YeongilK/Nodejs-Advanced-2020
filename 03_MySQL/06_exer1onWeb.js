@@ -32,7 +32,7 @@ let html = `
 </head>
 <body>
 <div class="container">
-    <h3>2009년도에 데뷔한 걸그룹의 히트송은?</h3>
+    <h3>2009년도에 데뷔한 걸그룹은?</h3>
     <hr>
     <table class="table table-striped">
         <tr>
