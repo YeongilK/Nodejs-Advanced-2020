@@ -53,8 +53,8 @@ let server = http.createServer((req, res) => {
             html += `<tr>
                         <td>${row.continent}</td>
                         <td>${row.countOfNation}</td>
-                        <td>${row.sumGnp}</td>
-                        <td>${row.avgGnp}</td>
+                        <td>${row.sumGnp.toLocaleString()}</td>
+                        <td>${row.avgGnp.toLocaleString()}</td>
                     </tr>`;
         }
         html += `</table>

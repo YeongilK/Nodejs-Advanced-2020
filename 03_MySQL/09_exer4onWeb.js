@@ -43,7 +43,7 @@ let html = `
             <th>대륙명</th>
             <th>국가명</th>
             <th>도시명</th>
-            <th>인구수</th>
+            <th>인구수(명)</th>
         </tr>
 `;
 
@@ -58,7 +58,7 @@ let server = http.createServer((req, res) => {
                         <td>${row.continent}</td>
                         <td>${row.country}</td>
                         <td>${row.city}</td>
-                        <td>${row.population}</td>
+                        <td>${row.population.toLocaleString()}</td>
                     </tr>`;
         }
         html += `</table>

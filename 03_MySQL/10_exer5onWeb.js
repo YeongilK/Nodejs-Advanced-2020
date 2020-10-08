@@ -40,8 +40,8 @@ let html = `
     <table class="table table-striped">
         <tr>
             <th>도시명</th>
-            <th>인구수</th>
             <th>공식언어명</th>
+            <th>인구수(명)</th>
         </tr>
 `;
 
@@ -54,8 +54,8 @@ let server = http.createServer((req, res) => {
         for (let row of rows) {
             html += `<tr>
                         <td>${row.city}</td>
-                        <td>${row.population}</td>
                         <td>${row.language}</td>
+                        <td>${row.population.toLocaleString()}</td>
                     </tr>`;
         }
         html += `</table>
