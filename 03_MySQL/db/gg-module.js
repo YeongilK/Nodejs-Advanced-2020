@@ -58,7 +58,7 @@ module.exports = {
         conn.end();
     },
     getSinger:    function(ggid, callback) {
-        let sql = `SELECT * FROM girl_group WHERE ggid=? order by ggid desc;`;
+        let sql = `SELECT * FROM girl_group WHERE ggid=? order by ggid desc;`;      // 코드에서는 * 사용 자제 !!
         let conn = this.getConnection();
 
         conn.query(sql, ggid, function(err, rows, fields) {
