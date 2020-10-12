@@ -22,7 +22,8 @@ module.exports = {
     },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT * FROM song ORDER BY sid DESC LIMIT 5;`;
+        let sql = `SELECT ggid, name, date_format(debut, "%Y-%m-%d") as debut, hsid
+        FROM girl_group order by ggid desc;`;
     
         conn.query(sql, (err, rows, fields) => {
             if (err) {
@@ -32,24 +33,8 @@ module.exports = {
         });
         conn.end();
     },
-    getJoinLists:    function(callback) {
-        let conn = this.getConnection();
-        let sql = `SELECT s.sid, s.title, g.name, s.lyrics 
-        FROM song AS s
-        left JOIN girl_group AS g
-        ON s.sid=g.hit_song_id
-        ORDER BY s.sid DESC LIMIT 10;`;
-    
-        conn.query(sql, (err, rows, fields) => {
-            if (err) {
-                console.log(err);
-            }
-            callback(rows);
-        });
-        conn.end();
-    },
-    insertSong: function(params, callback) {
-        let sql = `insert into song(title, lyrics) values(?, ?);`; 
+    insertSinger: function(params, callback) {
+        let sql = `insert into girl_group(name, debut) values(?, ?);`; 
         let conn = this.getConnection();
 
         conn.query(sql, params, function(err, fields) {
@@ -60,11 +45,11 @@ module.exports = {
         });
         conn.end();
     },
-    deleteSong: function(sid, callback) {
-        let sql = `delete from song where sid=?;`; 
+    deleteSinger: function(ggid, callback) {
+        let sql = `delete from girl_group where ggid=?;`; 
         let conn = this.getConnection();
 
-        conn.query(sql, sid, function(err, fields) {
+        conn.query(sql, ggid, function(err, fields) {
             if (err) {
                 console.log(err);
             }
@@ -72,11 +57,11 @@ module.exports = {
         });
         conn.end();
     },
-    getSong:    function(sid, callback) {
-        let sql = `SELECT * FROM song WHERE sid=?;`;
+    getSinger:    function(ggid, callback) {
+        let sql = `SELECT * FROM girl_group WHERE ggid=? order by ggid desc;`;
         let conn = this.getConnection();
 
-        conn.query(sql, sid, function(err, rows, fields) {
+        conn.query(sql, ggid, function(err, rows, fields) {
             if (err) {
                 console.log(err);
             }
@@ -84,8 +69,8 @@ module.exports = {
         });
         conn.end();
     },
-    updateSong: function(params, callback) {
-        let sql = `update song set title=?, lyrics=? where sid=?;`; 
+    updateSinger: function(params, callback) {
+        let sql = `update girl_group set name=?, debut=? where ggid=?;`; 
         let conn = this.getConnection();
 
         conn.query(sql, params, function(err, fields) {

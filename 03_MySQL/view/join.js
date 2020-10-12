@@ -4,6 +4,7 @@ module.exports.mainForm = function(rows) {
         tableRow += `<tr>
                         <td>${row.sid}</td>
                         <td>${row.title}</td>
+                        <td>${row.name ? row.name : ' '}</td>
                         <td>${row.lyrics}</td>
                         <td>
                             <a href="/update/${row.sid}">수정</a>
@@ -31,12 +32,13 @@ module.exports.mainForm = function(rows) {
         <tr style="font-size: larger;">
             <th>sid</th>
             <th>제목</th>
+            <th>가수</th>
             <th>가사</th>
             <th>액션</th>
         </tr>
         ${tableRow}
     </table>
-    <input type='button' class='btn btn-secondary' value='+  추가' onClick="location.href='/insert'" style="float: right">
+    <input type='button' class='btn btn-secondary' value='+ 추가' onClick="location.href='/insert'" style="float: right">
 </div>
 </body>
 </html>

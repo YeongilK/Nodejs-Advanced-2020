@@ -2,12 +2,13 @@ module.exports.mainForm = function(rows) {
     let tableRow = '';
     for (let row of rows) {
         tableRow += `<tr>
-                        <td>${row.sid}</td>
-                        <td>${row.title}</td>
-                        <td>${row.lyrics}</td>
+                        <td>${row.ggid}</td>
+                        <td>${row.name}</td>
+                        <td>${row.debut}</td>
+                        <td>${row.hsid ? row.hsid : ' '}</td>
                         <td>
-                            <a href="/update/${row.sid}">수정</a>
-                            <a href="/delete/${row.sid}">삭제</a>
+                            <a href="/update/${row.ggid}">수정</a>
+                            <a href="/delete/${row.ggid}">삭제</a>
                         </td>
                     </tr>`;
     }
@@ -21,17 +22,18 @@ module.exports.mainForm = function(rows) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <title>Song Page</title>
+    <title>Girl Group</title>
 </head>
 <body>
 <div class="container">
-    <h2>노래 조회</h2>
+    <h2>걸그룹 조회</h2>
     <hr>
     <table class="table table-striped">
         <tr style="font-size: larger;">
-            <th>sid</th>
-            <th>제목</th>
-            <th>가사</th>
+            <th>ggid</th>
+            <th>가수</th>
+            <th>데뷔일자</th>
+            <th>hsid</th>
             <th>액션</th>
         </tr>
         ${tableRow}

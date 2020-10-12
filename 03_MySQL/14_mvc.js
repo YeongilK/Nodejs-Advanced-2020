@@ -6,8 +6,13 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.get('/', (req, res) => {
-    dm.getAllLists(rows => {
+/*     dm.getAllLists(rows => {
         const view = require('./view/list');
+        let html = view.mainForm(rows);
+        res.send(html);
+    }); */
+    dm.getJoinLists(rows => {
+        const view = require('./view/join');
         let html = view.mainForm(rows);
         res.send(html);
     });
@@ -19,21 +24,44 @@ app.get('/insert', (req, res) => {
     res.send(html);
 });
 
-/* app.post('/insert', (req, res) => {
-    let conn = getConnection();
+app.post('/insert', (req, res) => {
     let title = req.body.title;
     let lyrics = req.body.lyrics;
-    let sql = `insert into song(title, lyrics) values(?, ?);`; 
     let params = [title, lyrics];
 
-    conn.query(sql, params, function(err, fields) {
-        if (err) {
-            console.log(err);
-        }
+    dm.insertSong(params, () => {
         res.redirect('/');
     });
-    conn.end();
-}); */
+});
+
+app.get('/delete/:sid', (req, res) => {
+    let sid = parseInt(req.params.sid);
+    //console.log(sid, typeof(sid));
+    dm.deleteSong(sid, () => {
+        res.redirect('/');
+    });
+});
+
+app.get('/update/:sid', (req, res) => {
+    let sid = parseInt(req.params.sid);
+
+    dm.getSong(sid, result => {
+        const view = require('./view/update');
+        let html = view.updateForm(result);
+        res.send(html);
+    });
+});
+
+app.post('/update', (req, res) => {
+    let sid = parseInt(req.body.sid);
+    let title = req.body.title;
+    let lyrics = req.body.lyrics;
+    let params = [title, lyrics, sid];
+
+    dm.updateSong(params, () => {
+        res.redirect('/');
+    });
+});
 
 app.listen(3000, function() {
     console.log('Server Running at http://127.0.0.1:3000');
