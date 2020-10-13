@@ -21,7 +21,8 @@ app.get('/', (req, res) => {
     console.log(req.session.uid);
 
     if (!req.session.uid) {        
-        res.redirect('/login');
+        let html = am.alertMsg('로그인 정보가 없습니다\\n로그인 하세요', '/login');
+        res.send(html);
     } else {                    // 로그인 된 상태
         dm.getAllLists(rows => {
             const view = require('./view/session_list');
