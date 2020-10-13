@@ -11,11 +11,6 @@ app.get('/', (req, res) => {
         let html = view.mainForm(rows);
         res.send(html);
     });
-/*     dm.getJoinLists(rows => {
-        const view = require('./view/join');
-        let html = view.mainForm(rows);
-        res.send(html);
-    }); */
 });
 
 app.get('/insert', (req, res) => {
