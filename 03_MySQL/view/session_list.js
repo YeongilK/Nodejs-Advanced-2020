@@ -26,7 +26,7 @@ module.exports.mainForm = function(uname, rows) {
 <body>
 <div class="container">
     <h2 class="mt-3">사용자 조회</h2>
-    <p>${uname}님 환영합니다.&nbsp;&nbsp;<a href="/logout">로그아웃</a></p>
+    <p>${uname}님 환영합니다.&nbsp;&nbsp;&nbsp;<a href="/logout">로그아웃</a></p>
     <hr>
     <table class="table table-striped">
         <tr style="font-size: larger;">
