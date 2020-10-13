@@ -19,8 +19,8 @@ let output = shasum.digest('base64');           // hex, base64
 
 conn.connect();
 
-let params = ['sylee', output, '이수연'];
-let sql = `INSERT INTO users (uid, pwd, name) VALUES (?, ?, ?);`;
+let params = ['yikim', output, '김영일'];
+let sql = `INSERT INTO users (uid, pwd, uname) VALUES (?, ?, ?);`;
 
 conn.query(sql, params, function(err, fields) {
     if (err) {
