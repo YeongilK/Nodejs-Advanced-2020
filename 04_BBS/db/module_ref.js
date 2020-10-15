@@ -22,8 +22,8 @@ module.exports = {
     },
     getAllLists:    function(callback) {
         let conn = this.getConnection();
-        let sql = `SELECT uid, uname, tel, email, DATE_FORMAT(regDate, "%Y-%m-%d %T") AS regDate
-        FROM users where isDeleted=0 ORDER BY regDate;`;
+        let sql = `SELECT uid, uname, DATE_FORMAT(regDate, "%Y-%m-%d %T") AS regDate
+        FROM users where isDeleted=0 ORDER BY regDate LIMIT 10;`;
     
         conn.query(sql, (err, rows, fields) => {
             if (err) {
@@ -45,23 +45,11 @@ module.exports = {
         });
         conn.end();
     },
-    registerUser: function(params, callback) {
-        let sql = `insert into users(uid, pwd, uname, tel, email) values(?, ?, ?, ?, ?);`; 
+    deleteUser: function(uid, callback) {
         let conn = this.getConnection();
-
-        conn.query(sql, params, function(err, fields) {
-            if (err) {
-                console.log(err);
-            }
-            callback();
-        });
-        conn.end();
-    },
-    updateUser: function(params, callback) {
-        let conn = this.getConnection();
-        let sql = `UPDATE users SET pwd=?, tel=?, email=? WHERE uid LIKE ?;`;
+        let sql = `UPDATE users SET isDeleted=1 WHERE uid LIKE ?;`;
     
-        conn.query(sql, params, (err, fields) => {
+        conn.query(sql, uid, (err, fields) => {
             if (err) {
                 console.log(err);
             }
@@ -69,11 +57,11 @@ module.exports = {
         });
         conn.end();
     },
-    deleteUser: function(uid, callback) {
+    updateUser: function(params, callback) {
         let conn = this.getConnection();
-        let sql = `UPDATE users SET isDeleted=1 WHERE uid LIKE ?;`;
+        let sql = `UPDATE users SET pwd=? WHERE uid LIKE ?;`;
     
-        conn.query(sql, uid, (err, fields) => {
+        conn.query(sql, params, (err, fields) => {
             if (err) {
                 console.log(err);
             }

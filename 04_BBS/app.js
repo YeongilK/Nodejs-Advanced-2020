@@ -5,8 +5,10 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const uRouter = require('./userRouter');
+const bRouter = require('./bbsRouter');
 
-const dm = require('./db/userdb-module');
+const udm = require('./db/userdb-module');
+const bdm = require('./db/bbsdb-module');
 const am = require('./view/alertMsg');
 const ut = require('./util');
 
@@ -24,15 +26,18 @@ app.use(session({
     store: new FileStore({logFn: function(){}})
 }));
 app.use('/user', uRouter);
+app.use('/bbs', bRouter);
 
 app.get('/', ut.isLoggedIn, (req, res) => {
-    fs.readFile('./view/index.html', 'utf8', (err, data) => {
-        res.send(data);
+    bdm.getBbsLists(rows => {
+        const view = require('./view/home');
+        let html = view.mainForm(req.session.uname, rows);
+        res.send(html);
     });
 });
 
 app.get('/login', (req, res) => {
-    const view = require('./view/user_login');
+    const view = require('./view/userLogin');
     let html = view.loginForm();
     res.send(html);
 });
@@ -42,9 +47,9 @@ app.post('/login', (req, res) => {
     let pwd = req.body.pwd;
     let pwdHash = ut.generateHash(pwd);
 
-    dm.getUserInfo(uid, result => {
+    udm.getUserInfo(uid, result => {
         if (result === undefined) {
-            let html = am.alertMsg(`Login 실패!!\\nuid ${uid} 이/가 없습니다.`, '/login');       // 주의: alert창에는 한줄만 출력!
+            let html = am.alertMsg(`Login 실패\\n없는 아이디입니다.`, '/login');
             res.send(html);
         } else {
             if (result.pwd === pwdHash) {
@@ -55,11 +60,16 @@ app.post('/login', (req, res) => {
                     res.redirect('/');
                 });
             } else {
-                let html = am.alertMsg(`Login 실패!!\\n패스워드가 다릅니다.`, '/login');
+                let html = am.alertMsg(`Login 실패\\n패스워드가 다릅니다.`, '/login');
                 res.send(html);
             }
         }
     });
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
 });
 
 app.listen(3000, function() {

@@ -57,6 +57,8 @@ CREATE TABLE reply (
   );
 `;
 
+let spmTmp = `SELECT * FROM users WHERE uid LIKE ?;`;
+
 let conn = getConnection();
 conn.query(sqlReply, (err, fields) => {
     if (err) {

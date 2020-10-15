@@ -11,7 +11,7 @@ module.exports = {
     // 로그인 여부를 확인하는 함수
     isLoggedIn: function(req, res, next) {
         if (!req.session.uid) {        
-            let html = am.alertMsg('로그인 정보가 없습니다\\n로그인 하세요', '/login');
+            let html = am.alertMsg('로그인 정보가 없습니다.\\n로그인 또는 회원가입을 하시기 바랍니다.', '/login');
             res.send(html);
         } else {
             next();         // 다음 미들웨어한테 권한을 줌

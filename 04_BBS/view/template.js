@@ -1,5 +1,5 @@
 module.exports = {
-    header:     function() {
+    header:     function(uname) {
         return `
     <!DOCTYPE html>
     <html lang="ko">
@@ -18,16 +18,27 @@ module.exports = {
         <img src="/img/hoseo.png" alt="logo" style="height: 40px; margin-right: 40px;">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="home.html" style="margin-right: 30px;">홈</a>
+                <a class="nav-link" href="/" style="margin-right: 50px;"><i class="fas fa-home fa-2x"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/logout" style="margin-right: 30px;">로그아웃</a>
+                <a class="nav-link" href="/user/list" style="margin-right: 50px"><i class="fas fa-user-edit fa-2x"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bbs/create"><i class="far fa-edit fa-2x"></i></a>
             </li>
         </ul>
-        <div class="navbar-text fixed-right" id="weather">
-            홍길동님 안녕하세요.&nbsp;&nbsp;&nbsp;&nbsp;
-            날씨: <i class="far fa-sun fa-lg"></i> / 온도: 22&deg;
-        </div>
+        <ul class="navbar-text mr-5">${uname}님 안녕하세요.</ul>
+        <ul class="navbar-nav fixed-right">
+            <li>
+                <input class="form-control mr-5" type="text" placeholder="제목 검색">
+            </li>
+            <li>
+                <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+            </li>
+            <li>
+                <a class="nav-link ml-5" href="/logout" style="margin-right: 30px;"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+            </li>
+        </ul>
     </nav>
         `;
     },
@@ -36,8 +47,8 @@ module.exports = {
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center fixed-bottom">
         <span class="navbar-text">Copyright ⓒ 2020 Hoseo institute of Big Data</span>
     </nav>
-</body>
-</html>
+    </body>
+    </html>
         `;
     }
 }
