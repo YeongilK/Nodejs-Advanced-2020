@@ -1,6 +1,6 @@
 const template = require('./template');
 
-module.exports.updateForm = function(result) {
+module.exports.updateUserForm = function(result) {
     return `
     ${template.header(result.uname)}
     <div class="container" style="margin-top: 90px;">
@@ -13,7 +13,7 @@ module.exports.updateForm = function(result) {
                     <input type="hidden" name="uid" value="${result.uid}">
                     <table class="table table-borderless">
                         <tr>
-                            <td><label for="pwd">패스워드</label></td>
+                            <td><label for="pwd">패스워드 변경</label></td>
                             <td><input type="password" name="pwd" id="pwd"></td>
                         </tr>
                         <tr>
@@ -23,12 +23,12 @@ module.exports.updateForm = function(result) {
                         <tr>
                             <td><label for="tel">Tel</label></td>
                             <td>
-                                <input type="tel" name="tel" id="tel" value="${result.tel}" pattern="[0-1]{3}-[0-9]{4}-[0-9]{4}">
+                                <input type="tel" name="tel" id="tel" value="${result.tel}" pattern="[0-1]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-1234-5678">
                             </td>
                         </tr>
                         <tr>
                             <td><label for="email">Email</label></td>
-                            <td><input type="email" name="email" id="email" value="${result.email}"></td>
+                            <td><input type="email" name="email" id="email" value="${result.email}" placeholder="uid@hoseo.net"></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: center;">

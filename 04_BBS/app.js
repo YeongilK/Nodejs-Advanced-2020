@@ -31,7 +31,7 @@ app.use('/bbs', bRouter);
 app.get('/', ut.isLoggedIn, (req, res) => {
     bdm.getBbsLists(rows => {
         const view = require('./view/home');
-        let html = view.mainForm(req.session.uname, rows);
+        let html = view.mainForm(req.session.uname);
         res.send(html);
     });
 });

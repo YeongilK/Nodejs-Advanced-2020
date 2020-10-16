@@ -36,12 +36,14 @@ uRouter.post('/register', (req, res) => {
 });
 
 uRouter.get('/list', (req, res) => {
-    if (req.session.uid === 'admin') {          // 관리자는 모든 회원정보 조회 가능.
+    // 관리자는 모든 회원정보 조회 할 수 있는 화면 출력
+    if (req.session.uid === 'admin') {          
         dm.getAllLists(rows => {
             const view = require('./view/userLists');
             let html = view.userListForm(req.session.uname, rows);
             res.send(html);
         });
+        // 관리자가 아닌 아이디로 접속하면 자기 자신의 정보 변경 화면 출력
     } else {
         dm.getUserInfo(req.session.uid, (result) => {
             res.redirect(`/user/update/${req.session.uid}`);
@@ -71,10 +73,10 @@ uRouter.get('/delete/:uid', ut.isLoggedIn, (req, res) => {
 });
 
 uRouter.get('/update/:uid', ut.isLoggedIn, (req, res) => {
-    if (req.params.uid === req.session.uid) {       // 권한 있는 상태, 자기 자신의 정보만 삭제 가능
+    if (req.params.uid === req.session.uid) {       // 권한 있는 상태, 자기 자신의 정보만 수정 가능
         dm.getUserInfo(req.params.uid, (result) => {
             const view = require('./view/userUpdate');
-            let html = view.updateForm(result);
+            let html = view.updateUserForm(result);
             res.send(html);
         });
     } else {                                        // 권한 없는 상태

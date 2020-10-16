@@ -18,27 +18,33 @@ module.exports = {
         <img src="/img/hoseo.png" alt="logo" style="height: 40px; margin-right: 40px;">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/" style="margin-right: 50px;"><i class="fas fa-home fa-2x"></i></a>
+                <a class="nav-link" href="/" style="margin-right: 50px;">
+                    <i class="fas fa-home fa-2x"></i>&nbsp;Home
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/user/list" style="margin-right: 50px"><i class="fas fa-user-edit fa-2x"></i></a>
+                <a class="nav-link" href="/bbs/list" style="margin-right: 50px">
+                    <i class="fas fa-list-ul fa-2x"></i>&nbsp;게시글 목록
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/bbs/create"><i class="far fa-edit fa-2x"></i></a>
+                <a class="nav-link" href="/user/list" style="margin-right: 50px">
+                    <i class="fas fa-user-edit fa-2x"></i>&nbsp;개인정보수정
+                </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class="fas fa-sign-out-alt fa-2x"></i>&nbsp;로그아웃
+                </a>
+            </il>
         </ul>
         <ul class="navbar-text mr-5">${uname}님 안녕하세요.</ul>
-        <ul class="navbar-nav fixed-right">
-            <li>
-                <input class="form-control mr-5" type="text" placeholder="제목 검색">
-            </li>
-            <li>
-                <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
-            </li>
-            <li>
-                <a class="nav-link ml-5" href="/logout" style="margin-right: 30px;"><i class="fas fa-sign-out-alt fa-2x"></i></a>
-            </li>
-        </ul>
+        <nav class="navbar navbar-light mr-4">
+            <form class="form-inline" action="/bbs/search" method="post">
+                <input class="form-control mr-sm-2" type="search" placeholder="제목 검색" name="keyword">
+                <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </nav>
     </nav>
         `;
     },

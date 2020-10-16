@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const moment = require('moment');
 const am = require('./view/alertMsg');
 
 module.exports = {
@@ -16,5 +17,12 @@ module.exports = {
         } else {
             next();         // 다음 미들웨어한테 권한을 줌
         }
+    },
+    // DB에서 읽은 시간을 오늘이면 시간을 어제까지는 날짜를 반환
+    getDisplayTime: function(dt) {
+        let today = moment().format('YYYY-MM-DD');
+        let dbtime = moment(dt).format('YYYY-MM-DD HH:mm:ss');
+        return (dbtime.indexOf(today) == 0) ?
+            dbtime.substring(11) : dbtime.substring(0,10);
     }
 }
