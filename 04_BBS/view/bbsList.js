@@ -15,6 +15,7 @@ module.exports.bbsListForm = function(uname, rows) {
                         <td class="col-1" style="text-align: center">${row.viewCount}</td>
                     </tr>`;
     }
+
     return `
     ${template.header(uname)}
     <div class="container-fluid" style="margin-top: 90px;">
@@ -24,7 +25,7 @@ module.exports.bbsListForm = function(uname, rows) {
             <div class="col-3"></div>
         </div>
     </div>
-    <div class="container" style="margin-top: 30px;">
+    <div class="container" style="margin-top: 30px; margin-bottom: 90px">
         <div class="row mb-3">
             <div class="col-2"></div>
             <div class="col-8"></div>

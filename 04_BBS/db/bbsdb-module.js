@@ -28,8 +28,7 @@ module.exports = {
         JOIN users AS u
         ON b.uid=u.uid
         WHERE b.isDeleted=0
-        ORDER BY b.bid desc
-        LIMIT 10;`;
+        ORDER BY b.bid desc;`;
     
         conn.query(sql, (err, rows, fields) => {
             if (err) {
@@ -39,7 +38,7 @@ module.exports = {
         });
         conn.end();
     },
-    createBbs: function(params, callback) {
+    createBbs:      function(params, callback) {
         let sql = `INSERT INTO bbs(uid, title, content) VALUES (?, ?, ?);`; 
         let conn = this.getConnection();
 
@@ -51,7 +50,7 @@ module.exports = {
         });
         conn.end();
     },
-    getBbsInfo:    function(bid, callback) {
+    getBbsInfo:     function(bid, callback) {
         let conn = this.getConnection();
         let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content, 
         DATE_FORMAT(b.modTime, '%Y-%m-%d %T') as modTime, b.viewCount, b.replyCount
@@ -78,7 +77,7 @@ module.exports = {
         });
         conn.end();
     },
-    updateBbs: function(params, callback) {
+    updateBbs:      function(params, callback) {
         let conn = this.getConnection();
         let sql = `UPDATE bbs SET title=?, content=?, modTime=now() WHERE bid=?;`;
     
@@ -90,7 +89,7 @@ module.exports = {
         });
         conn.end();
     },
-    deleteBbs: function(bid, callback) {
+    deleteBbs:      function(bid, callback) {
         let conn = this.getConnection();
         let sql = `UPDATE bbs SET isDeleted=1 WHERE bid=?;`;
     
@@ -102,7 +101,7 @@ module.exports = {
         });
         conn.end();
     },
-    searchList: function(keyword, callback) {
+    searchList:     function(keyword, callback) {
         let conn = this.getConnection();
         let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content, 
                     b.modTime, b.viewCount, b.replyCount
@@ -116,6 +115,51 @@ module.exports = {
             if (error)
                 console.log(error);
             callback(rows);
+        });
+        conn.end();
+    },
+    getReplyInfo:   function(bid, callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT r.rid, r.bid, r.uid, u.uname, r.content, r.isMine, 
+                    DATE_FORMAT(r.regTime, '%Y-%m-%d %T') as regTime
+                    FROM reply AS r
+                    JOIN users AS u
+                    ON r.uid = u.uid
+                    WHERE r.bid=?;`;
+        conn.query(sql, bid, (error, rows, fields) => {
+            if (error)
+                console.log(error);
+            callback(rows);
+        });
+        conn.end();
+    },
+    insertReply:    function(params, callback) {
+        let conn = this.getConnection();
+        let sql = `INSERT INTO reply(bid, uid, content, isMine) VALUES (?, ?, ?, ?);`;
+        conn.query(sql, params, (error, fields) => {
+            if (error)
+                console.log(error);
+            callback();
+        });
+        conn.end();
+    },
+    plusReplyCount: function(bid, callback) {
+        let conn = this.getConnection();
+        let sql = `UPDATE bbs SET replyCount=replyCount+1 WHERE bid=?;`;
+        conn.query(sql, bid, (error, fields) => {
+            if (error)
+                console.log(error);
+            callback();
+        });
+        conn.end();
+    },
+    getBbsCount:    function(callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT COUNT(*) AS count FROM bbs WHERE isDeleted=0;`;
+        conn.query(sql, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(results[0]);   // 주의할 것
         });
         conn.end();
     }

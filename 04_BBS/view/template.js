@@ -23,11 +23,6 @@ module.exports = {
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/bbs/list" style="margin-right: 50px">
-                    <i class="fas fa-list-ul fa-2x"></i>&nbsp;게시글 목록
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/user/list" style="margin-right: 50px">
                     <i class="fas fa-user-edit fa-2x"></i>&nbsp;개인정보수정
                 </a>

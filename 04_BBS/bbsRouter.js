@@ -7,7 +7,7 @@ const ut = require('./util');
 
 bRouter.get('/list', (req, res) => {
     dm.getBbsLists(rows => {
-        const view = require('./view/bbsLists');
+        const view = require('./view/bbsList');
         let html = view.bbsListForm(req.session.uname, rows);
         res.send(html);
     });
@@ -34,17 +34,20 @@ bRouter.post('/create', (req, res) => {
 
 bRouter.get('/view/:bid', (req, res) => {
     let bid = parseInt(req.params.bid);
+    let uname = req.session.uname;
     dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
-            const view = require('./view/bbsView');
-            let html = view.viewBbsForm(result); 
-            res.send(html);
+            dm.getReplyInfo(bid, rows => {
+                const view = require('./view/bbsView');
+                let html = view.viewBbsForm(uname, result, rows); 
+                res.send(html);
+            });
         });
     });
 });
 
 bRouter.get('/update/:bid/uid/:uid', (req, res) => {
-    let bid = req.params.bid;
+    let bid = parseInt(req.params.bid);
     let uid = req.params.uid;
     if (uid === req.session.uid) {       // 권한 있는 상태, 자신이 올린 게시글만 수정 가능
         dm.getBbsInfo(bid, result => {
@@ -59,7 +62,7 @@ bRouter.get('/update/:bid/uid/:uid', (req, res) => {
 });
 
 bRouter.post('/update', (req, res) => {
-    let bid = req.body.bid;
+    let bid = parseInt(req.body.bid);
     let title = req.body.title;
     let content = req.body.content;
 
@@ -71,7 +74,7 @@ bRouter.post('/update', (req, res) => {
 });
 
 bRouter.get('/delete/:bid/uid/:uid', (req, res) => {
-    let bid = req.params.bid;
+    let bid = parseInt(req.params.bid);
     let uid = req.params.uid;
 
     // 관리자로 로그인하면 회원을 탈퇴시킬 수 있다.
@@ -100,6 +103,23 @@ bRouter.post('/search', (req, res) => {
         const view = require('./view/bbsSearch');
         let html = view.searchListForm(req.session.uname, keyword, rows); 
         res.send(html);
+    });
+});
+
+bRouter.post('/reply', (req, res) => {
+    let bid = parseInt(req.body.bid);
+    let uid = req.session.uid;
+    let content = req.body.content;
+    let isMine = (uid === req.body.uid) ? 1 : 0;
+
+    console.log(bid, uid, content, isMine);
+
+    let params = [bid, uid, content, isMine];
+
+    dm.insertReply(params, () => {
+        dm.plusReplyCount(bid, () => {
+            res.redirect(`/bbs/view/${bid}`);
+        });
     });
 });
 
