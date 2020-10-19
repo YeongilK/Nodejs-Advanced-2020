@@ -9,11 +9,11 @@ module.exports.viewBbsForm = function(uname, result, rows) {
         if (row.isMine === 1)
             reply += `
             <div class="mb-3">
-                <br><strong>${result.uname}</strong><span class="badge badge-danger">작성자</span><br>`;
+                <br><strong>${row.uname}</strong><span class="badge badge-danger">작성자</span><br>`;
         else 
             reply += `
             <div class="mb-3">
-                <br><strong>${uname}</strong><br>`;
+                <br><strong>${row.uname}</strong><br>`;
 
         reply +=  `
                 ${row.content}<br>
