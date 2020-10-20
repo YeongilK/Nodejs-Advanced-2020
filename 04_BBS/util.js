@@ -22,7 +22,6 @@ module.exports = {
     getDisplayTime: function(dt) {
         let today = moment().format('YYYY-MM-DD');
         let dbtime = moment(dt).format('YYYY-MM-DD HH:mm:ss');
-        return (dbtime.indexOf(today) == 0) ?
-            dbtime.substring(11) : dbtime.substring(0,10);
+        return (dbtime.indexOf(today) == 0) ? dbtime.substring(11) : dbtime.substring(0,10);
     }
 }

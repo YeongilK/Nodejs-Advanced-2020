@@ -52,7 +52,7 @@ module.exports.registerForm = function() {
                         <tr>
                             <td>Tel</td>
                             <td>
-                                <input type="tel" name="tel" id="tel" placeholder="010-1234-5678" pattern="[0-1]{3}-[0-9]{4}-[0-9]{4}">
+                                <input type="tel" name="tel" id="tel" placeholder="010-1234-5678" pattern="[0-9]{2, 3}-[0-9]{3, 4}-[0-9]{3, 4}">
                             </td>
                         </tr>
                         <tr>

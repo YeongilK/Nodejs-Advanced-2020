@@ -47,7 +47,7 @@ module.exports.loginForm = function() {
 		</div>
         <div class="row mt-3">
             <div class="col-3"></div>
-            <div class="col-7"><h3>BBS 로그인</h3></div>
+            <div class="col-7"><h3>게시판 로그인</h3></div>
             <div class="col-2"></div>
             <div class="col-12"><hr></div>
             

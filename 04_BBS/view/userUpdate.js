@@ -23,7 +23,7 @@ module.exports.updateUserForm = function(result) {
                         <tr>
                             <td><label for="tel">Tel</label></td>
                             <td>
-                                <input type="tel" name="tel" id="tel" value="${result.tel}" pattern="[0-1]{3}-[0-9]{4}-[0-9]{4}" placeholder="010-1234-5678">
+                                <input type="tel" name="tel" id="tel" value="${result.tel}" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{3,4}" placeholder="010-1234-5678">
                             </td>
                         </tr>
                         <tr>

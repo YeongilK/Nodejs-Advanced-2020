@@ -153,7 +153,7 @@ module.exports = {
         });
         conn.end();
     },
-    getBbsCount:    function(callback) {
+    getBbsTotalCount:    function(callback) {
         let conn = this.getConnection();
         let sql = `SELECT COUNT(*) AS count FROM bbs WHERE isDeleted=0;`;
         conn.query(sql, (error, results, fields) => {

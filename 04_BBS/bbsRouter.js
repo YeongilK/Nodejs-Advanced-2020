@@ -90,13 +90,13 @@ bRouter.get('/delete/:bid/uid/:uid', (req, res) => {
             });
             // 권한 없는 상태
         } else {                                        
-            let html = am.alertMsg(`해당 게시글 삭제 권한이 없습니다.`, '/bbs/list');
+            let html = am.alertMsg(`해당 게시글 삭제 권한이 없습니다.`, `/bbs/view/${bid}`);
             res.send(html);
         } 
     }
 });
 
-bRouter.post('/search', (req, res) => {
+bRouter.post('/search', ut.isLoggedIn, (req, res) => {
     let keyword = `%${req.body.keyword}%`;
 
     dm.searchList(keyword, rows => {

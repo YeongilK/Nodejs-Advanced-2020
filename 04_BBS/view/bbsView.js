@@ -16,7 +16,7 @@ module.exports.viewBbsForm = function(uname, result, rows) {
                 <br><strong>${row.uname}</strong><br>`;
 
         reply +=  `
-                ${row.content}<br>
+                ${row.content.replace(/\n/g, '<br>')}<br>
                 ${row.regTime}<br>
             </div>`;
     }
@@ -33,13 +33,13 @@ module.exports.viewBbsForm = function(uname, result, rows) {
             <div class="col-4"></div>
 
             <div class="col-1"></div>
-            <div class="mt-3 col-7">
+            <div class="mt-3 col-8">
                 <h3><b>${result.title}</b></h3><br>
                 <h6>작성자: ${result.uname}<h6>
                 <h6>글번호: ${result.bid} | 조회: ${result.viewCount}</h6>
                 <h6>${result.modTime}<h6>
             </div>
-            <div class="col-3"></div>
+            <div class="col-2"></div>
             <div class="col-1"></div>
 
             <div class="col-1"></div>

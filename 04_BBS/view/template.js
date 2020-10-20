@@ -28,6 +28,11 @@ module.exports = {
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/bbs/list" style="margin-right: 50px">
+                    <i class="fas fa-list-ul fa-2x"></i>&nbsp;게시글목록
+                </a>
+            </il>
+            <li class="nav-item">
                 <a class="nav-link" href="/logout">
                     <i class="fas fa-sign-out-alt fa-2x"></i>&nbsp;로그아웃
                 </a>

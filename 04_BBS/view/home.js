@@ -4,25 +4,15 @@ module.exports.mainForm = function(uname) {
     return `
     ${template.header(uname)}
     <div class="container" style="margin-top: 90px;">
+    <div class="jumbotron text-center">
+        <h2>사이트를 방문해주셔서 감사합니다</h2><br>
+        <p>자유롭게 구경하시고 행복한 하루 되세요</p>
+    </div>
         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
-                <div class="card-deck text-center">
-                    <div class="card-body bg-secondary">
-                        <h3 class="card-title">게시판</h3>
-                        <p class="card-text">게시물을 작성하고, 댓글을 남길 수 있는 공간입니다.</p>
-                        <a href="/bbs/list" class="card-link">
-                            <i class="fas fa-list-ul fa-2x"></i>&nbsp;<h4>ENTER</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2"></div>
-
             <div class="col-1"></div>
             <div class="col-10">
                 <form action="/" method="post">
-                    <div class="container mt-5">
+                    <div class="container mt-3">
                         <div id="demo" class="carousel slide" data-ride="carousel">
                             <ul class="carousel-indicators">
                                 <li data-target="#demo" data-slide-to="0" class="active"></li>
