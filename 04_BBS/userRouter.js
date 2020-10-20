@@ -35,12 +35,12 @@ uRouter.post('/register', (req, res) => {
     }
 });
 
-uRouter.get('/list', (req, res) => {
+uRouter.get('/list', ut.isLoggedIn, (req, res) => {
     // 관리자는 모든 회원정보 조회 할 수 있는 화면 출력
     if (req.session.uid === 'admin') {          
         dm.getAllLists(rows => {
             const view = require('./view/userLists');
-            let html = view.userListForm(req.session.uname, rows);
+            let html = view.userListForm(req.session.uname, 1, rows);
             res.send(html);
         });
         // 관리자가 아닌 아이디로 접속하면 자기 자신의 정보 변경 화면 출력

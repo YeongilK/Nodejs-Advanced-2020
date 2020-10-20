@@ -1,6 +1,6 @@
 const template = require('./template');
 
-module.exports.userListForm = function(uname, rows) {
+module.exports.userListForm = function(uname, page, rows) {
     let tableRow = '';
     for (let row of rows) {
         tableRow += `<tr>
@@ -15,7 +15,7 @@ module.exports.userListForm = function(uname, rows) {
                     </tr>`;
     }
     return `
-    ${template.header(uname)}
+    ${template.header(uname, page)}
     <div class="container" style="margin-top: 90px;">
         <div class="row">
             <div class="col-1"></div>
@@ -23,7 +23,7 @@ module.exports.userListForm = function(uname, rows) {
                 <form action="/user/list" method="post">
                     <h3>사용자 관리</h3>
                     <div class="col-12"><hr></div>
-                    <table class="table table-condensed table-hover text-center">
+                    <table class="table table-hover text-center">
                         <tr class="table-secondary" style="font-size: larger;">
                             <th>사용자 ID</th>
                             <th>이름</th>

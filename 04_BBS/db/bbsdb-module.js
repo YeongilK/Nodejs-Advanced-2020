@@ -21,20 +21,31 @@ module.exports = {
         });
         return conn;
     },
-    getBbsLists:    function(callback) {
+    getBbsLists:    function(offset, callback) {
         let conn = this.getConnection();
         let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content, b.modTime, b.viewCount, b.replyCount
         FROM bbs AS b
         JOIN users AS u
         ON b.uid=u.uid
         WHERE b.isDeleted=0
-        ORDER BY b.bid desc;`;
+        ORDER BY b.bid desc
+        LIMIT 10 OFFSET ?;`;
     
-        conn.query(sql, (err, rows, fields) => {
+        conn.query(sql, offset, (err, rows, fields) => {
             if (err) {
                 console.log(err);
             }
             callback(rows);
+        });
+        conn.end();
+    },
+    getBbsTotalCount:    function(callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT COUNT(*) AS count FROM bbs WHERE isDeleted=0;`;
+        conn.query(sql, (error, results, fields) => {
+            if (error)
+                console.log(error);
+            callback(results[0]);   // 주의할 것
         });
         conn.end();
     },
@@ -150,16 +161,6 @@ module.exports = {
             if (error)
                 console.log(error);
             callback();
-        });
-        conn.end();
-    },
-    getBbsTotalCount:    function(callback) {
-        let conn = this.getConnection();
-        let sql = `SELECT COUNT(*) AS count FROM bbs WHERE isDeleted=0;`;
-        conn.query(sql, (error, results, fields) => {
-            if (error)
-                console.log(error);
-            callback(results[0]);   // 주의할 것
         });
         conn.end();
     }

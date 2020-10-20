@@ -14,7 +14,7 @@ let conn = mysql.createConnection({
 
 conn.connect();
 
-let params = ['admin', '안녕하세요', '안녕하세요 관리자입니다.'];
+let params = ['admin', 'Pagination 시험용', '개수늘리기'];
 let sql = `INSERT INTO bbs (uid, title, content) VALUES (?, ?, ?);`;
 
 conn.query(sql, params, function(err, fields) {

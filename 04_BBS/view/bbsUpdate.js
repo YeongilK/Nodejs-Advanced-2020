@@ -1,8 +1,8 @@
 const template = require('./template');
 
-module.exports.updateBbsForm = function(uname, result) {
+module.exports.updateBbsForm = function(uname, result, page) {
     return `
-    ${template.header(uname)}
+    ${template.header(uname, page)}
     <div class="container-fluid" style="margin-top: 90px;">
         <div class="row">
             <div class="col-2"></div>

@@ -5,21 +5,32 @@ const dm = require('./db/bbsdb-module');
 const am = require('./view/alertMsg');
 const ut = require('./util');
 
-bRouter.get('/list', (req, res) => {
-    dm.getBbsLists(rows => {
-        const view = require('./view/bbsList');
-        let html = view.bbsListForm(req.session.uname, rows);
-        res.send(html);
+bRouter.get('/list/:page', ut.isLoggedIn, (req, res) => {
+    let uname = req.session.uname;
+    let page = parseInt(req.params.page);
+    let offset = (page - 1) * 10;
+
+    dm.getBbsTotalCount(result => {
+        let totalPage = Math.ceil(result.count / 10);
+        let firstPage = Math.floor((page-1) / 10) * 10 + 1;
+        let lastPage = Math.ceil(page/10) * 10;
+        lastPage = (lastPage > totalPage) ? totalPage : lastPage;
+        
+        dm.getBbsLists(offset, rows => {
+            const view = require('./view/bbsList');
+            let html = view.bbsListForm(uname, rows, page, firstPage, lastPage, totalPage);
+            res.send(html);
+        });
     });
 });
 
-bRouter.get('/create', (req, res) => {
+bRouter.get('/create', ut.isLoggedIn, (req, res) => {
     const view = require('./view/bbsCreate');
-    let html = view.createBbsForm(req.session.uname);
+    let html = view.createBbsForm(req.session.uname, 1);
     res.send(html);
 });
 
-bRouter.post('/create', (req, res) => {
+bRouter.post('/create', ut.isLoggedIn, (req, res) => {
     let uid = req.session.uid;
     let title = req.body.title;
     let content = req.body.content;
@@ -27,32 +38,32 @@ bRouter.post('/create', (req, res) => {
     let params = [uid, title, content];
 
     dm.createBbs(params, () => {
-        let html = am.alertMsg('작성이 완료되었습니다.', '/bbs/list');
+        let html = am.alertMsg('작성이 완료되었습니다.', '/bbs/list/1');
         res.send(html);
     });
 });
 
-bRouter.get('/view/:bid', (req, res) => {
+bRouter.get('/view/:bid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     let uname = req.session.uname;
     dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
             dm.getReplyInfo(bid, rows => {
                 const view = require('./view/bbsView');
-                let html = view.viewBbsForm(uname, result, rows); 
+                let html = view.viewBbsForm(uname, result, rows, 1); 
                 res.send(html);
             });
         });
     });
 });
 
-bRouter.get('/update/:bid/uid/:uid', (req, res) => {
+bRouter.get('/update/:bid/uid/:uid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     let uid = req.params.uid;
     if (uid === req.session.uid) {       // 권한 있는 상태, 자신이 올린 게시글만 수정 가능
         dm.getBbsInfo(bid, result => {
             const view = require('./view/bbsUpdate');
-            let html = view.updateBbsForm(req.session.uname, result);
+            let html = view.updateBbsForm(req.session.uname, result, 1);
             res.send(html);
         });
     } else {                                        // 권한 없는 상태
@@ -61,7 +72,7 @@ bRouter.get('/update/:bid/uid/:uid', (req, res) => {
     }
 });
 
-bRouter.post('/update', (req, res) => {
+bRouter.post('/update', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.body.bid);
     let title = req.body.title;
     let content = req.body.content;
@@ -73,20 +84,20 @@ bRouter.post('/update', (req, res) => {
     });
 });
 
-bRouter.get('/delete/:bid/uid/:uid', (req, res) => {
+bRouter.get('/delete/:bid/uid/:uid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     let uid = req.params.uid;
 
     // 관리자로 로그인하면 회원을 탈퇴시킬 수 있다.
     if (req.session.uid === 'admin') {                  
         dm.deleteBbs(bid, () => {
-            res.redirect('/bbs/list');
+            res.redirect('/bbs/list/1');
         });
     } else {
         // 권한 있는 상태, 자기 자신일 때는 삭제 가능
         if (uid === req.session.uid) {
             dm.deleteBbs(bid, () => {
-                res.redirect('/bbs/list');
+                res.redirect('/bbs/list/1');
             });
             // 권한 없는 상태
         } else {                                        
@@ -97,16 +108,17 @@ bRouter.get('/delete/:bid/uid/:uid', (req, res) => {
 });
 
 bRouter.post('/search', ut.isLoggedIn, (req, res) => {
+    let uname = req.session.uname;
     let keyword = `%${req.body.keyword}%`;
 
     dm.searchList(keyword, rows => {
         const view = require('./view/bbsSearch');
-        let html = view.searchListForm(req.session.uname, keyword, rows); 
+        let html = view.searchListForm(uname, keyword, rows, 1); 
         res.send(html);
     });
 });
 
-bRouter.post('/reply', (req, res) => {
+bRouter.post('/reply', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.body.bid);
     let uid = req.session.uid;
     let content = req.body.content;

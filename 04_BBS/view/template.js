@@ -1,5 +1,5 @@
 module.exports = {
-    header:     function(uname) {
+    header:     function(uname, page) {
         return `
     <!DOCTYPE html>
     <html lang="ko">
@@ -28,7 +28,7 @@ module.exports = {
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/bbs/list" style="margin-right: 50px">
+                <a class="nav-link" href="/bbs/list/${page}" style="margin-right: 50px">
                     <i class="fas fa-list-ul fa-2x"></i>&nbsp;게시글목록
                 </a>
             </il>

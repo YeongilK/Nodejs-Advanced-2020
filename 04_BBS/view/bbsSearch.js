@@ -1,7 +1,7 @@
 const template = require('./template');
 const ut = require('../util');
 
-module.exports.searchListForm = function(uname, keyword, rows) {
+module.exports.searchListForm = function(uname, keyword, rows, page) {
     let tableRow = '';
     for (let row of rows) {
         let modTime = ut.getDisplayTime(row.modTime);
@@ -15,16 +15,17 @@ module.exports.searchListForm = function(uname, keyword, rows) {
                         <td class="col-1" style="text-align: center">${row.viewCount}</td>
                     </tr>`;
     }
+    
     return `
-    ${template.header(uname)}
+    ${template.header(uname, page)}
     <div class="container-fluid" style="margin-top: 90px;">
         <div class="row">
             <div class="col-2"></div>
-            <div class="col-7"><h3><strong>"${keyword.substring(1,keyword.length-1)}"</strong>의 검색 결과</h3></div>
+            <div class="col-7"><h3><strong>"${keyword.substring(1, keyword.length-1)}"</strong>의 검색 결과</h3></div>
             <div class="col-3"></div>
         </div>
     </div>
-    <div class="container" style="margin-top: 30px;">
+    <div class="container" style="margin-top: 30px; margin-bottom: 90px">
         <div class="row mb-3">
             <div class="col-2"></div>
             <div class="col-8"></div>

@@ -1,8 +1,8 @@
 const template = require('./template');
 
-module.exports.mainForm = function(uname) {
+module.exports.mainForm = function(uname, page) {
     return `
-    ${template.header(uname)}
+    ${template.header(uname, page)}
     <div class="container" style="margin-top: 90px;">
     <div class="jumbotron text-center">
         <h2>사이트를 방문해주셔서 감사합니다</h2><br>

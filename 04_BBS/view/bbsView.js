@@ -1,7 +1,7 @@
 const template = require('./template');
 const ut = require('../util');
 
-module.exports.viewBbsForm = function(uname, result, rows) {
+module.exports.viewBbsForm = function(uname, result, rows, page) {
     let content = result.content.replace(/\n/g, '<br>');
     let reply = '';
 
@@ -22,7 +22,7 @@ module.exports.viewBbsForm = function(uname, result, rows) {
     }
 
     return `
-    ${template.header(uname)}
+    ${template.header(uname, page)}
     <div class="container" style="margin-top: 100px; margin-bottom: 90px;">
         <div class="row">
             <div class="col-1"></div>
@@ -70,7 +70,7 @@ module.exports.viewBbsForm = function(uname, result, rows) {
                     </div>
                 </form>
                 <div align="right">
-                    <button class="mr-3 btn btn-secondary" onclick="location.href='/bbs/list'">목록으로</button>
+                    <button class="mr-3 btn btn-secondary" onclick="location.href='/bbs/list/1'">목록으로</button>
                 </div>
             </div>
             <div class="col-1"></div>
