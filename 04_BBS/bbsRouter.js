@@ -1,9 +1,14 @@
 const express = require('express');
+const multipart = require('connect-multiparty');
+const fs = require('fs');
 const bRouter = express.Router();
 
 const dm = require('./db/bbsdb-module');
 const am = require('./view/alertMsg');
 const ut = require('./util');
+
+bRouter.use(express.static(__dirname + '/public/upload'));
+bRouter.use(multipart({uploadDir: __dirname + '/public/upload'}));
 
 bRouter.get('/list/:page', ut.isLoggedIn, (req, res) => {
     let uname = req.session.uname;
@@ -34,23 +39,32 @@ bRouter.post('/create', ut.isLoggedIn, (req, res) => {
     let uid = req.session.uid;
     let title = req.body.title;
     let content = req.body.content;
-
     let params = [uid, title, content];
-
+    let subject = req.body.subject;
+    
     dm.createBbs(params, () => {
-        let html = am.alertMsg('작성이 완료되었습니다.', '/bbs/list/1');
-        res.send(html);
+        let imageName = `${subject}.jpg`;
+        let uploadPath = req.files.image.path;
+        let newFileName = __dirname + '/public/upload/' + imageName;
+
+        fs.rename(uploadPath, newFileName, error => {
+            let html = am.alertMsg('작성이 완료되었습니다.', `/bbs/list/1`);
+            res.send(html);
+        });
     });
 });
 
 bRouter.get('/view/:bid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     let uname = req.session.uname;
+    let subject = req.params.subject;
+
     dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
             dm.getReplyInfo(bid, rows => {
+                console.log(subject);
                 const view = require('./view/bbsView');
-                let html = view.viewBbsForm(uname, result, rows, 1); 
+                let html = view.viewBbsForm(uname, result, rows, 1, subject); 
                 res.send(html);
             });
         });

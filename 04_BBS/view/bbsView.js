@@ -1,7 +1,7 @@
 const template = require('./template');
 const ut = require('../util');
 
-module.exports.viewBbsForm = function(uname, result, rows, page) {
+module.exports.viewBbsForm = function(uname, result, rows, page, subject) {
     let content = result.content.replace(/\n/g, '<br>');
     let reply = '';
 
@@ -44,6 +44,12 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
 
             <div class="col-1"></div>
             <div class="col-10"><hr></div>
+            <div class="col-1"></div>
+
+            <div class="col-1"></div>
+            <div class="col-10">
+                <img src="/${subject}.jpg" alt="${subject}">
+            </div>
             <div class="col-1"></div>
 
             <div class="col-1"></div>

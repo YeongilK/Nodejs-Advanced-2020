@@ -112,7 +112,7 @@ module.exports = {
         });
         conn.end();
     },
-    getSearchList:     function(keyword, callback) {
+    getSearchList:  function(keyword, callback) {
         let conn = this.getConnection();
         let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content, 
                     b.modTime, b.viewCount, b.replyCount
