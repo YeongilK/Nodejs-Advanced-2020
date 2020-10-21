@@ -111,7 +111,7 @@ bRouter.post('/search', ut.isLoggedIn, (req, res) => {
     let uname = req.session.uname;
     let keyword = `%${req.body.keyword}%`;
 
-    dm.searchList(keyword, rows => {
+    dm.getSearchList(keyword, rows => {
         const view = require('./view/bbsSearch');
         let html = view.searchListForm(uname, keyword, rows, 1); 
         res.send(html);
