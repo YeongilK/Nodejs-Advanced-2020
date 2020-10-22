@@ -17,14 +17,16 @@ module.exports.createBbsForm = function(uname, page) {
                 <input type="text" class="form-control" id="title" name="title"><br>
                 <label for="content">내용: </label>
                 <textarea class="form-control" rows="10" id="content" name="content"></textarea><br>
-                <label>업로드 할 파일 이름: </label><br>
-                <input class="mr-3" type="text" name="subject">
-                <input type="file" name="image">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="photo" name="photo">
+                        <label class="custom-file-label" for="photo">업로드 할 파일 선택</label>
+                    </div>
             </div>
             <input class="mr-3 btn btn-primary" type="submit" value="확인">
             <input class="btn btn-secondary" type="reset" value="취소">
         </form>
     </div>
+    ${template.uploadScript()}
     ${template.footer()}
     `;
 }

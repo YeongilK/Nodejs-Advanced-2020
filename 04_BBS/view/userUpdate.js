@@ -2,18 +2,25 @@ const template = require('./template');
 
 module.exports.updateUserForm = function(result) {
     return `
-    ${template.header(result.uname)}
+    ${template.header(result.uname, 1)}
     <div class="container" style="margin-top: 90px;">
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
                 <h3>${result.uname} 님 개인정보 관리</h3>
                 <hr>
-                <form action="/user/update" method="POST">
+                <form action="/user/update" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="uid" value="${result.uid}">
                     <table class="table table-borderless">
                         <tr>
-                            <td><label for="pwd">패스워드 변경</label></td>
+                            <td><label for="uname">이름</label></td>
+                            <td><input type="text" name="uname" id="uname" value="${result.uname}"></td>
+                            <td rowspan="5">
+                                <img src="/upload/${result.photo}" alt="${result.photo}" class="mb-3" style="height: 300px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="pwd">변경할 패스워드</label></td>
                             <td><input type="password" name="pwd" id="pwd"></td>
                         </tr>
                         <tr>
@@ -29,6 +36,15 @@ module.exports.updateUserForm = function(result) {
                         <tr>
                             <td><label for="email">Email</label></td>
                             <td><input type="email" name="email" id="email" value="${result.email}" placeholder="uid@hoseo.net"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="photo">사진</label></td>
+                            <td colspan="2">
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="photo" name="photo">
+                                    <label class="custom-file-label" for="photo">업로드할 사진 파일 선택</label>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: center;">
@@ -49,6 +65,7 @@ module.exports.updateUserForm = function(result) {
 			</div>
         </div>
     </div>
+    ${template.uploadScript()}
     ${template.footer()}
     `;
 }

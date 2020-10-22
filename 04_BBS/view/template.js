@@ -53,8 +53,19 @@ module.exports = {
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center fixed-bottom">
         <span class="navbar-text">Copyright ⓒ 2020 Hoseo institute of Big Data</span>
     </nav>
+
     </body>
     </html>
+        `;
+    },
+    uploadScript:   function() {
+        return `
+    <script>
+        $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
         `;
     }
 }

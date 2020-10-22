@@ -28,7 +28,7 @@ module.exports.registerForm = function() {
         <div class="row">
             <div class="col-2"></div>
             <div class="col-8">
-                <form action="/user/register" method="post">
+                <form action="/user/register" method="post" enctype="multipart/form-data">
                     <h3>회원가입</h3>
                     <p>정보를 입력하세요</p>
                     <div class="col-12"><hr></div>
@@ -60,6 +60,15 @@ module.exports.registerForm = function() {
                             <td><input type="email" name="email" id="email" placeholder="hsuser@hoseo.com"></td>
                         </tr>
                         <tr>
+                            <td><label for="photo">사진</label></td>
+                            <td>
+                                <div class="custom-file mb-3">
+                                    <input type="file" class="custom-file-input" id="photo" name="photo">
+                                    <label class="custom-file-label" for="photo">업로드할 사진 파일 선택</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
                             <td colspan="2" style="text-align: center;">
                                 <input class="mr-1 mb-5 btn btn-primary" type="submit" value="확인">
                                 <input class="mb-5 btn btn-secondary" type="reset" value="취소">
@@ -71,6 +80,7 @@ module.exports.registerForm = function() {
             <div class="col-2"></div>
         </div>
     </div>
+    ${template.uploadScript()}
     ${template.footer()}
     `;
 }

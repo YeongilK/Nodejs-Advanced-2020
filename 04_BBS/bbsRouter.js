@@ -1,14 +1,23 @@
 const express = require('express');
-const multipart = require('connect-multiparty');
-const fs = require('fs');
+const multer = require('multer');
 const bRouter = express.Router();
 
 const dm = require('./db/bbsdb-module');
 const am = require('./view/alertMsg');
 const ut = require('./util');
 
-bRouter.use(express.static(__dirname + '/public/upload'));
-bRouter.use(multipart({uploadDir: __dirname + '/public/upload'}));
+const upload = multer({
+    storage: multer.diskStorage({
+        // set a localstorage destination
+        destination: __dirname + '/public/upload/',
+        // set a file name
+        filename: (req, file, cb) => {
+            cb(null, new Date().toISOString().replace(/[-:\.A-Z]/g, '') + '_' + file.originalname);
+        }
+    })
+});
+
+bRouter.use(express.static(__dirname + '/public'));
 
 bRouter.get('/list/:page', ut.isLoggedIn, (req, res) => {
     let uname = req.session.uname;
@@ -35,36 +44,29 @@ bRouter.get('/create', ut.isLoggedIn, (req, res) => {
     res.send(html);
 });
 
-bRouter.post('/create', ut.isLoggedIn, (req, res) => {
+bRouter.post('/create', ut.isLoggedIn, upload.single('photo'), (req, res) => {
     let uid = req.session.uid;
     let title = req.body.title;
     let content = req.body.content;
     let params = [uid, title, content];
-    let subject = req.body.subject;
+    let photo = req.file.filename;
     
-    dm.createBbs(params, () => {
-        let imageName = `${subject}.jpg`;
-        let uploadPath = req.files.image.path;
-        let newFileName = __dirname + '/public/upload/' + imageName;
-
-        fs.rename(uploadPath, newFileName, error => {
-            let html = am.alertMsg('작성이 완료되었습니다.', `/bbs/list/1`);
-            res.send(html);
-        });
+    dm.createBbs(params, photo, () => {
+        let html = am.alertMsg('작성이 완료되었습니다.', `/bbs/list/1`);
+        res.send(html);
     });
 });
 
 bRouter.get('/view/:bid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
     let uname = req.session.uname;
-    let subject = req.params.subject;
 
     dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
             dm.getReplyInfo(bid, rows => {
-                console.log(subject);
+                console.log(result);
                 const view = require('./view/bbsView');
-                let html = view.viewBbsForm(uname, result, rows, 1, subject); 
+                let html = view.viewBbsForm(uname, result, rows, 1); 
                 res.send(html);
             });
         });
