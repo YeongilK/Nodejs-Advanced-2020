@@ -69,4 +69,3 @@ module.exports.updateUserForm = function(result) {
     ${template.footer()}
     `;
 }
-
