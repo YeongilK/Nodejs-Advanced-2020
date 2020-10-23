@@ -76,7 +76,7 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
                         <input type="hidden" name="uid" value="${result.uid}">
                         <label for="reply"><h5><strong>댓글</strong>&nbsp;<span class="text-danger">[${result.replyCount}]</span></h5></label>
                         ${reply}
-                        <textarea class="mb-3 form-control" id="reply" name="content" rows="4" cols="80"></textarea>
+                        <textarea class="mt-5 mb-3 form-control" id="reply" name="content" rows="4" cols="80"></textarea>
                         <input class="mr-3 btn btn-primary" type="submit" value="등록">
                         <input class="btn btn-secondary" type="reset" value="취소">
                     </div>
