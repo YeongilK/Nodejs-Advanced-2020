@@ -45,4 +45,3 @@ module.exports.userListForm = function(uname, page, rows, result) {
     ${template.footer()}
     `;
 }
-
