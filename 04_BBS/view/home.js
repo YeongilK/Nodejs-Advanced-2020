@@ -51,4 +51,3 @@ module.exports.mainForm = function(uname, page) {
     ${template.footer()}
     `;
 }
-
