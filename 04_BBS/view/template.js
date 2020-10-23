@@ -67,7 +67,12 @@ module.exports = {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     </script>
-    <script>CKEDITOR.replace('content');</script>
+    <script>
+        CKEDITOR.replace('content', {
+            width: "100%",
+            height: 500
+        });
+    </script>
         `;
     }
 }
