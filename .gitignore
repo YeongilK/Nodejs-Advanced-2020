@@ -3,6 +3,7 @@ tmp/
 mysql.json
 sessions/
 fontawesome/
+ckeditor/
 
 # Logs
 logs
