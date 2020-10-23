@@ -8,6 +8,7 @@ const ut = require('./util');
 const bRouter = require('./bbsRouter');
 
 uRouter.use('/bbs', bRouter);
+uRouter.use(express.static(__dirname + '/public'));
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -20,7 +21,6 @@ const upload = multer({
     })
 });
 
-uRouter.use(express.static(__dirname + '/public'));
 
 uRouter.get('/register', (req, res) => {
     const view = require('./view/userRegister');
