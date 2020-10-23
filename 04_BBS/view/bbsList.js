@@ -77,4 +77,3 @@ module.exports.bbsListForm = function(uname, rows, pages, firstPage, lastPage, t
     ${template.footer()}
     `;
 }
-
