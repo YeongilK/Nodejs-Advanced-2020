@@ -91,3 +91,4 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
     ${template.footer()}
     `;
 }
+
