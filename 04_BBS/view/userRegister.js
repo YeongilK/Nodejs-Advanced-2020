@@ -84,3 +84,4 @@ module.exports.registerForm = function() {
     ${template.footer()}
     `;
 }
+
