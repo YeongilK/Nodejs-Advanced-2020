@@ -88,4 +88,4 @@ module.exports.loginForm = function() {
 	</div>
     ${template.footer()}
     `;
-} 
+}
