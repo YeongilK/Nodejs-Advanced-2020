@@ -4,6 +4,7 @@ mysql.json
 sessions/
 fontawesome/
 ckeditor/
+upload/
 
 # Logs
 logs
