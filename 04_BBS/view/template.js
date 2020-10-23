@@ -12,6 +12,7 @@ module.exports = {
         <script src="/jquery/jquery.min.js"></script>
         <script src="/popper/popper.min.js"></script>
         <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
     </head>
     <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -66,6 +67,7 @@ module.exports = {
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     </script>
+    <script>CKEDITOR.replace('content');</script>
         `;
     }
 }
