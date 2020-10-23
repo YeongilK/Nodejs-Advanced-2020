@@ -25,3 +25,4 @@ module.exports.updateBbsForm = function(uname, result, page) {
     ${template.footer()}
     `;
 }
+
