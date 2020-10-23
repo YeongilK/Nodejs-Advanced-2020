@@ -52,4 +52,3 @@ module.exports.searchListForm = function(uname, keyword, rows, page) {
     ${template.footer()}
     `;
 }
-
