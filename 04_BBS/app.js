@@ -30,11 +30,9 @@ app.use('/user', uRouter);
 app.use('/bbs', bRouter);
 
 app.get('/', ut.isLoggedIn, (req, res) => {
-    bdm.getBbsLists(rows => {
-        const view = require('./view/home');
-        let html = view.mainForm(req.session.uname, 1);     // 1은 pageNo
-        res.send(html);
-    });
+    const view = require('./view/home');
+    let html = view.mainForm(req.session.uname, 1);     // 1은 pageNo
+    res.send(html);
 });
 
 app.get('/login', (req, res) => {
