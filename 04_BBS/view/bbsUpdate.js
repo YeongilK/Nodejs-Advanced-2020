@@ -14,10 +14,8 @@ module.exports.updateBbsForm = function(uname, result, page) {
         <form action="/bbs/update" method="post">
             <div class="form-group">
                 <input type="hidden" name="bid" value="${result.bid}">
-                <label for="title">제목: </label>
                 <input type="text" class="form-control" id="title" name="title" value="${result.title}"><br>
-                <label for="content">내용: </label>
-                <textarea class="form-control" rows="10" id="content" name="content">${result.content}</textarea>
+                <textarea class="ckeditor" rows="10" id="content" name="content">${result.content}</textarea>
             </div>
             <input class="mr-3 btn btn-primary" type="submit" value="등록">
             <input class="btn btn-secondary" type="reset" value="취소">

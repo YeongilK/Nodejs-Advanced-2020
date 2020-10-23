@@ -13,14 +13,8 @@ module.exports.createBbsForm = function(uname, page) {
     <div class="container" style="margin-top: 30px;">
         <form action="/bbs/create" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="title">제목: </label>
-                <input type="text" class="form-control" id="title" name="title"><br>
-                <label for="content">내용: </label>
-                <textarea class="form-control" rows="10" id="content" name="content"></textarea><br>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="photo" name="photo">
-                        <label class="custom-file-label" for="photo">업로드 할 파일 선택</label>
-                    </div>
+                <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요."><br>
+                <textarea class="ckeditor" rows="10" cols="40" id="content" name="content"></textarea><br>
             </div>
             <input class="mr-3 btn btn-primary" type="submit" value="확인">
             <input class="btn btn-secondary" type="reset" value="취소">
