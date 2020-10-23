@@ -24,4 +24,3 @@ module.exports.createBbsForm = function(uname, page) {
     ${template.footer()}
     `;
 }
-
