@@ -45,4 +45,3 @@ module.exports.viewUserForm = function(result) {
     ${template.footer()}
     `;
 }
-
