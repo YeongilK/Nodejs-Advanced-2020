@@ -20,6 +20,13 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
             </div>`;
     }
 
+    let bbsImage;
+    if (result.photo) {
+        bbsImage = `<img src="/upload/${result.photo}" class="mb-3" style="width: 700px" alt="${result.photo}"></img>`;
+    } else {
+        bbsImage = ' ';
+    }
+
     return `
     ${template.header(uname, page)}
     <div class="container" style="margin-top: 100px; margin-bottom: 90px;">
@@ -47,7 +54,7 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
 
             <div class="col-1"></div>
             <div class="col-10">
-                <img src="/upload/${result.photo}" class="mb-3" style="width: 700px" alt="${result.photo}">
+                ${bbsImage}
             </div>
             <div class="col-1"></div>
 
@@ -67,7 +74,7 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
                     <div class="form-group">
                         <input type="hidden" name="bid" value="${result.bid}">
                         <input type="hidden" name="uid" value="${result.uid}">
-                        <label for="reply"><h5><strong>댓글</strong></h5></label>
+                        <label for="reply"><h5><strong>댓글</strong>&nbsp;<span class="text-danger">[${result.replyCount}]</span></h5></label>
                         ${reply}
                         <textarea class="mb-3 form-control" id="reply" name="content" rows="4" cols="80"></textarea>
                         <input class="mr-3 btn btn-primary" type="submit" value="등록">
