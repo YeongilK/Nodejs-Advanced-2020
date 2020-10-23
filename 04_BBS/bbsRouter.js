@@ -44,14 +44,15 @@ bRouter.get('/create', ut.isLoggedIn, (req, res) => {
     res.send(html);
 });
 
-bRouter.post('/create', ut.isLoggedIn, upload.single('photo'), (req, res) => {
+bRouter.post('/create', ut.isLoggedIn, (req, res) => {
     let uid = req.session.uid;
     let title = req.body.title;
     let content = req.body.content;
     let params = [uid, title, content];
-    let photo = req.file.filename;
-    
-    dm.createBbs(params, photo, () => {
+    //console.log(req.file);
+    console.log(title, content);
+
+    dm.createBbs(params, () => {
         let html = am.alertMsg('작성이 완료되었습니다.', `/bbs/list/1`);
         res.send(html);
     });
@@ -64,7 +65,7 @@ bRouter.get('/view/:bid', ut.isLoggedIn, (req, res) => {
     dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
             dm.getReplyInfo(bid, rows => {
-                console.log(result);
+                console.log(result.photo);
                 const view = require('./view/bbsView');
                 let html = view.viewBbsForm(uname, result, rows, 1); 
                 res.send(html);
@@ -149,6 +150,17 @@ bRouter.post('/reply', ut.isLoggedIn, (req, res) => {
             res.redirect(`/bbs/view/${bid}`);
         });
     });
+});
+
+bRouter.post('/uploadImage', ut.isLoggedIn, upload.single('upload'), (req, res) => {
+    //console.log(req.file);
+    let fileUrl = '/upload/' + req.file.filename;
+    let jsonResponse = {
+        uploaded: 1,
+        fileName: req.file.filename,
+        url: fileUrl
+    };
+    res.send(JSON.stringify(jsonResponse));
 });
 
 module.exports = bRouter;

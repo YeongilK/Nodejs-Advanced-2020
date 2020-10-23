@@ -61,17 +61,16 @@ module.exports = {
     },
     uploadScript:   function() {
         return `
+
     <script>
-        $(".custom-file-input").on("change", function() {
-        var fileName = $(this).val().split("\\\\").pop();
-        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-    </script>
-    <script>
-        CKEDITOR.replace('content', {
+        let ckeditor_config = {
             width: "100%",
-            height: 500
-        });
+            height: "400",
+            enterMode : CKEDITOR.ENTER_BR,
+            shiftEnterMode : CKEDITOR.ENTER_P,
+            filebrowserUploadUrl: '/bbs/uploadImage'
+        };
+        CKEDITOR.replace('content', ckeditor_config);
     </script>
         `;
     }

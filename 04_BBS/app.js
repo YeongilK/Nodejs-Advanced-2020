@@ -16,6 +16,7 @@ const app = express();
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/popper', express.static(__dirname + '/node_modules/@popperjs/core/dist/umd'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/ckeditor', express.static(__dirname + '/public/ckeditor'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser('1q2w3e4r5t6y'));      // 아래 session의 secret 속성과 같은 값
@@ -48,8 +49,8 @@ app.post('/login', (req, res) => {
     let pwdHash = ut.generateHash(pwd);
 
     udm.getUserInfo(uid, result => {
-        if (result === undefined) {
-            let html = am.alertMsg(`Login 실패\\n없는 아이디입니다.`, '/login');
+        if (result === undefined || result.isDeleted === 1) {
+            let html = am.alertMsg(`Login 실패\\n없는 아이디이거나 탈퇴처리 된 회원입니다.`, '/login');
             res.send(html);
         } else {
             if (result.pwd === pwdHash) {

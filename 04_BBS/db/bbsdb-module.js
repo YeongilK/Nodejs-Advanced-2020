@@ -49,14 +49,8 @@ module.exports = {
         });
         conn.end();
     },
-    createBbs:      function(params, photo, callback) {
-        let sql;
-        if (photo) {
-            sql = `INSERT INTO bbs(uid, title, content, photo) VALUES (?, ?, ?, ?);`;
-            params.push(photo); 
-        } else {
-            sql = `INSERT INTO bbs(uid, title, content) VALUES (?, ?, ?);`; 
-        }
+    createBbs:      function(params, callback) {
+        let sql = `INSERT INTO bbs (uid, title, content) VALUES (?, ?, ?);`;;
         let conn = this.getConnection();
 
         conn.query(sql, params, function(err, fields) {
@@ -69,7 +63,7 @@ module.exports = {
     },
     getBbsInfo:     function(bid, callback) {
         let conn = this.getConnection();
-        let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content, b.photo,
+        let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.content,
         DATE_FORMAT(b.modTime, '%Y-%m-%d %T') as modTime, b.viewCount, b.replyCount
         FROM bbs AS b
         JOIN users AS u

@@ -11,7 +11,7 @@ module.exports.createBbsForm = function(uname, page) {
         </div>
     </div>
     <div class="container" style="margin-top: 30px;">
-        <form action="/bbs/create" method="post" enctype="multipart/form-data">
+        <form action="/bbs/create" method="post">
             <div class="form-group">
                 <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요."><br>
                 <textarea class="ckeditor" rows="10" cols="40" id="content" name="content"></textarea><br>

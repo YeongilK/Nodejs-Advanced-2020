@@ -21,6 +21,7 @@ module.exports.updateBbsForm = function(uname, result, page) {
             <input class="btn btn-secondary" type="reset" value="취소">
         </form>
     </div>
+    ${template.uploadScript()}
     ${template.footer()}
     `;
 }
