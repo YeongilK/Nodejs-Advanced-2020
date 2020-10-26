@@ -16,6 +16,7 @@ const app = express();
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/popper', express.static(__dirname + '/node_modules/@popperjs/core/dist/umd'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/chart', express.static(__dirname + '/node_modules/chart.js/dist'));
 app.use('/ckeditor', express.static(__dirname + '/public/ckeditor'));
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: false}));
