@@ -1,7 +1,6 @@
 const template = require('./template');
 
 module.exports.viewBbsForm = function(uname, result, rows, page) {
-    let content = result.content.replace(/\n/g, '<br>');
     let reply = '';
 
     for (row of rows) {
@@ -60,7 +59,7 @@ module.exports.viewBbsForm = function(uname, result, rows, page) {
 
             <div class="col-1"></div>
             <div class="col-10">
-                <p>${content}</p>
+                <p>${result.content}</p>
             </div>
             <div class="col-1"></div>
             
