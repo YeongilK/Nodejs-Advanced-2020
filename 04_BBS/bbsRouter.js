@@ -60,38 +60,18 @@ bRouter.post('/create', ut.isLoggedIn, (req, res) => {
 
 bRouter.get('/view/:bid', ut.isLoggedIn, (req, res) => {
     let bid = parseInt(req.params.bid);
-    let uid = req.params.uid;
     let uname = req.session.uname;
 
-    if (uid === req.session.uid) {
-        dm.getBbsInfo(bid, result => {
-            dm.getReplyInfo(bid, rows => {
-                const view = require('./view/bbsView');
-                let html = view.viewBbsForm(uname, result, rows, 1); 
-                res.send(html);
-            });
-        });
-    } else {
-        dm.getBbsInfo(bid, result => {
-            dm.plusViewCount(bid, () => {
-                dm.getReplyInfo(bid, rows => {
-                    const view = require('./view/bbsView');
-                    let html = view.viewBbsForm(uname, result, rows, 1); 
-                    res.send(html);
-                });
-            });
-        });
-    }
-
-/*     dm.getBbsInfo(bid, result => {
+    dm.getBbsInfo(bid, result => {
         dm.plusViewCount(bid, () => {
             dm.getReplyInfo(bid, rows => {
+                console.log(result.photo);
                 const view = require('./view/bbsView');
                 let html = view.viewBbsForm(uname, result, rows, 1); 
                 res.send(html);
             });
         });
-    }); */
+    });
 });
 
 bRouter.get('/update/:bid/uid/:uid', ut.isLoggedIn, (req, res) => {
