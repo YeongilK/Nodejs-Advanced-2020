@@ -13,6 +13,7 @@ module.exports = {
         <script src="/popper/popper.min.js"></script>
         <script src="/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
+        <script type="text/javascript" src="/chart/Chart.bundle.min.js"></script>
     </head>
     <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
@@ -63,6 +64,10 @@ module.exports = {
         return `
 
     <script>
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
         let ckeditor_config = {
             width: "100%",
             height: "400",
