@@ -14,7 +14,7 @@ module.exports.viewUserForm = function(result) {
                     <table class="table table-bordered" style="text-align: center">
                         <tr>
                             <td colspan="2">
-                                <img src="/upload/${result.photo}" alt="${result.photo}" class="mt-3 mb-3" style="height: 300px;">
+                                <img src="/upload/${result.photo}" alt="${result.photo}" class="mt-3 mb-3" style="height: 400px;">
                             </td>
                         </tr>
                         <tr>
