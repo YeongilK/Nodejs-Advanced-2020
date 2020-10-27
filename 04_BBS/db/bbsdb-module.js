@@ -163,5 +163,23 @@ module.exports = {
             callback();
         });
         conn.end();
+    },
+    getChartList:    function(callback) {
+        let conn = this.getConnection();
+        let sql = `SELECT b.bid, b.uid, u.uname, b.title, b.viewCount, b.replyCount
+        FROM bbs AS b
+        JOIN users AS u
+        ON b.uid=u.uid
+        WHERE b.isDeleted=0
+        ORDER BY b.viewCount DESC 
+        LIMIT 10;`;
+    
+        conn.query(sql, (err, rows, fields) => {
+            if (err) {
+                console.log(err);
+            }
+            callback(rows);
+        });
+        conn.end();
     }
 }
