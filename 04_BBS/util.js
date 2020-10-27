@@ -23,5 +23,28 @@ module.exports = {
         let today = moment().format('YYYY-MM-DD');
         let dbtime = moment(dt).format('YYYY-MM-DD HH:mm:ss');
         return (dbtime.indexOf(today) == 0) ? dbtime.substring(11) : dbtime.substring(0,10);
+    },
+    isAdmin:    function(req, res, next) {
+        if (req.session.uid !== 'admin') {
+            let html = am.alertMsg('권한이 없습니다.', '/');
+            res.send(html);
+        } else {
+            next();
+        }
+    },
+    adminViewChart_data:     function(rows) {
+        labels = [];
+        data = [];
+        tooltips = [];
+        for (let row of rows) {
+            labels.push(`${row.title}, ${row.uname}`);
+            data.push(row.viewCount);
+            tooltips.push(row.bid);
+        }
+        return {
+            labels: JSON.stringify(labels), 
+            data: JSON.stringify(data),
+            tooltips: JSON.stringify(tooltips)
+        };
     }
 }
