@@ -6,6 +6,7 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const uRouter = require('./userRouter');
 const bRouter = require('./bbsRouter');
+const aRouter = require('./adminRouter');
 
 const udm = require('./db/userdb-module');
 const bdm = require('./db/bbsdb-module');
@@ -29,6 +30,7 @@ app.use(session({
 }));
 app.use('/user', uRouter);
 app.use('/bbs', bRouter);
+app.use('/admin', aRouter);
 
 app.get('/', ut.isLoggedIn, (req, res) => {
     const view = require('./view/home');
