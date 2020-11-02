@@ -20,7 +20,7 @@ function getConnection() {
     return conn;
 }
 
-/* let sqlUsers = `
+let sqlUsers = `
 CREATE TABLE users (
     uid VARCHAR(20) NOT NULL PRIMARY KEY,
     pwd CHAR(44) NOT NULL,
@@ -29,7 +29,15 @@ CREATE TABLE users (
     email VARCHAR(40),
     regDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     isDeleted INT DEFAULT 0
-  );`; */
+    );`;
+    
+let conn = getConnection();
+conn.query(sqlUsers, (err, fields) => {
+    if (err) {
+        console.log(err);
+    }
+});
+conn.end();
 
 /* let sqlBbs = `
 CREATE TABLE bbs (
@@ -40,8 +48,17 @@ CREATE TABLE bbs (
     modTime DATETIME DEFAULT CURRENT_TIMESTAMP,
     viewCount INT DEFAULT 0,
     isDeleted INT DEFAULT 0,
+    replyCount INT DEFAULT 0,
     FOREIGN KEY(uid) REFERENCES users(uid)
   ) AUTO_INCREMENT=1001;`;*/
+
+/* let conn = getConnection();
+  conn.query(sqlBbs, (err, fields) => {
+      if (err) {
+          console.log(err);
+      }
+  });
+  conn.end(); */
 
 /* let sqlReply = `
 CREATE TABLE reply (
@@ -54,14 +71,14 @@ CREATE TABLE reply (
     FOREIGN KEY(bid) REFERENCES bbs(bid),
     FOREIGN KEY(uid) REFERENCES users(uid)
   );`; */
-  
+
 /* let conn = getConnection();
-conn.query(sqlUsers, (err, fields) => {
-    if (err) {
-        console.log(err);
-    }
-});
-conn.end(); */
+conn.query(sqlReply, (err, fields) => {
+if (err) {
+          console.log(err);
+      }
+  });
+  conn.end(); */
 
 /* let users = [
     ['park', 'A6xnQhbz4Vx2HuGl4lXwZ5U2I8iziLRFnhP5eNfIRvQ=', '박주영', '010-1234-5678', 'park@naver.com'],
@@ -117,7 +134,7 @@ for (let params of replyArray) {
 }
 conn.end(); */
 
-let bbsReply = [
+/* let bbsReply = [
     [3, 1, 1002], [2, 1, 1003], [4, 1, 1005]
 ];
 let replyUpdate = `update bbs set viewCount=?, replyCount=? where bid=?;`;
@@ -129,4 +146,4 @@ for (let params of bbsReply) {
             console.log(error);
     });
 }
-conn.end();
+conn.end(); */
