@@ -69,26 +69,22 @@ uRouter.get('/list', ut.isLoggedIn, (req, res) => {
             res.redirect(`/user/update/${uid}`);
         });
     }
-    
 });
 
 uRouter.get('/delete/:uid', ut.isLoggedIn, (req, res) => {
+    let uid = req.params.uid;
     // 관리자로 로그인하면 회원을 탈퇴시킬 수 있다.
-    if (req.session.uid === 'admin') {                  
-        dm.deleteUser(req.params.uid, () => {
+    if (req.session.uid === 'admin') {
+        dm.deleteUser(uid, () => {
             res.redirect('/user/list');
         });
     } else {
         // 권한 있는 상태, 자기 자신일 때는 삭제 가능
-        if (req.params.uid === req.session.uid) {
-            dm.deleteUser(req.params.uid, () => {
-                res.redirect('/');
+        if (uid === req.session.uid) {
+            dm.deleteUser(uid, () => {
+                res.redirect('/login');
             });
-            // 권한 없는 상태
-        } else {                                        
-            let html = am.alertMsg(`삭제 권한이 없습니다.`, '/');
-            res.send(html);
-        } 
+        }
     }
 });
 
