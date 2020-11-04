@@ -1,4 +1,3 @@
-const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -6,10 +5,8 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const uRouter = require('./userRouter');
 const bRouter = require('./bbsRouter');
-const aRouter = require('./adminRouter');
 
 const udm = require('./db/userdb-module');
-const bdm = require('./db/bbsdb-module');
 const am = require('./view/alertMsg');
 const ut = require('./util');
 
@@ -30,7 +27,6 @@ app.use(session({
 }));
 app.use('/user', uRouter);
 app.use('/bbs', bRouter);
-app.use('/admin', aRouter);
 
 app.get('/', ut.isLoggedIn, (req, res) => {
     const view = require('./view/home');
@@ -50,6 +46,7 @@ app.post('/login', (req, res) => {
     let pwdHash = ut.generateHash(pwd);
 
     udm.getUserInfo(uid, result => {
+        console.log(result)
         if (result === undefined || result.isDeleted === 1) {
             let html = am.alertMsg(`Login 실패\\n없는 아이디이거나 탈퇴처리 된 회원입니다.`, '/login');
             res.send(html);
