@@ -59,7 +59,7 @@ module.exports.updateUserForm = function(result) {
             <div class="col-3"></div>
 			<div class="col-7"></div>
 			<div class="col-2">
-				<button class="btn btn-danger" onclick="location.href='/user/delete'">
+				<button class="btn btn-danger" onclick="location.href='/user/delete/${result.uid}'">
 					회원 탈퇴
 				</button>
 			</div>
